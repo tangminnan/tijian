@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tijian.information.dao.BloodPressureDao">
+
+	<select id="get" resultType="com.tijian.information.domain.BloodPressureDO">
+		select `id`,`user_id`,`add_time`,`systolic_pressure`,`diastolic_pressure`,`pulse`,`avg` from t_blood_pressure where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.tijian.information.domain.BloodPressureDO">
+		select `id`,`user_id`,`add_time`,`systolic_pressure`,`diastolic_pressure`,`pulse`,`avg` from t_blood_pressure
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="systolicPressure != null and systolicPressure != ''"> and systolic_pressure = #{systolicPressure} </if>
+		  		  <if test="diastolicPressure != null and diastolicPressure != ''"> and diastolic_pressure = #{diastolicPressure} </if>
+		  		  <if test="pulse != null and pulse != ''"> and pulse = #{pulse} </if>
+		  		  <if test="avg != null and avg != ''"> and avg = #{avg} </if>
+				  <if test="checkId != null and checkId != ''"> and check_id = #{checkId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_blood_pressure
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="systolicPressure != null and systolicPressure != ''"> and systolic_pressure = #{systolicPressure} </if>
+		  		  <if test="diastolicPressure != null and diastolicPressure != ''"> and diastolic_pressure = #{diastolicPressure} </if>
+		  		  <if test="pulse != null and pulse != ''"> and pulse = #{pulse} </if>
+		  		  <if test="avg != null and avg != ''"> and avg = #{avg} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.tijian.information.domain.BloodPressureDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_blood_pressure
+		(
+			`user_id`, 
+			`add_time`, 
+			`systolic_pressure`, 
+			`diastolic_pressure`, 
+			`pulse`, 
+			`avg`
+		)
+		values
+		(
+			#{userId}, 
+			#{addTime}, 
+			#{systolicPressure}, 
+			#{diastolicPressure}, 
+			#{pulse}, 
+			#{avg}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.tijian.information.domain.BloodPressureDO">
+		update t_blood_pressure 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}, </if>
+			<if test="systolicPressure != null">`systolic_pressure` = #{systolicPressure}, </if>
+			<if test="diastolicPressure != null">`diastolic_pressure` = #{diastolicPressure}, </if>
+			<if test="pulse != null">`pulse` = #{pulse}, </if>
+			<if test="avg != null">`avg` = #{avg}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_blood_pressure where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_blood_pressure where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

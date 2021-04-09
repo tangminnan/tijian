@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tijian.information.dao.ComboMealDao">
+
+	<select id="get" resultType="com.tijian.information.domain.ComboMealDO">
+		select `id`,`combo_code`,`combo_name`,`amount_receivable`,`amount_received`,`discount`,`add_time`,`delete_flag`,`single_check` from t_combo_meal where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.tijian.information.domain.ComboMealDO">
+		select `id`,`combo_code`,`combo_name`,`amount_receivable`,`amount_received`,`discount`,`add_time`,`delete_flag`,`single_check` from t_combo_meal
+        where delete_flag=0
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="comboCode != null and comboCode != ''"> and combo_code = #{comboCode} </if>
+		  		  <if test="comboName != null and comboName != ''"> and combo_name = #{comboName} </if>
+		  		  <if test="amountReceivable != null and amountReceivable != ''"> and amount_receivable = #{amountReceivable} </if>
+		  		  <if test="amountReceived != null and amountReceived != ''"> and amount_received = #{amountReceived} </if>
+		  		  <if test="discount != null and discount != ''"> and discount = #{discount} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="singleCheck != null and singleCheck != ''"> and single_check = #{singleCheck} </if>
+
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_combo_meal
+		where delete_flag=0
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="comboCode != null and comboCode != ''"> and combo_code = #{comboCode} </if>
+		  		  <if test="comboName != null and comboName != ''"> and combo_name = #{comboName} </if>
+		  		  <if test="amountReceivable != null and amountReceivable != ''"> and amount_receivable = #{amountReceivable} </if>
+		  		  <if test="amountReceived != null and amountReceived != ''"> and amount_received = #{amountReceived} </if>
+		  		  <if test="discount != null and discount != ''"> and discount = #{discount} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="singleCheck != null and singleCheck != ''"> and single_check = #{singleCheck} </if>
+
+	</select>
+	 
+	<insert id="save" parameterType="com.tijian.information.domain.ComboMealDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_combo_meal
+		(
+			`combo_code`, 
+			`combo_name`, 
+			`amount_receivable`, 
+			`amount_received`, 
+			`discount`, 
+			`add_time`, 
+			`delete_flag`, 
+			`single_check`
+		)
+		values
+		(
+			#{comboCode}, 
+			#{comboName}, 
+			#{amountReceivable}, 
+			#{amountReceived}, 
+			#{discount}, 
+			#{addTime}, 
+			#{deleteFlag}, 
+			#{singleCheck}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.tijian.information.domain.ComboMealDO">
+		update t_combo_meal 
+		<set>
+			<if test="comboCode != null">`combo_code` = #{comboCode}, </if>
+			<if test="comboName != null">`combo_name` = #{comboName}, </if>
+			<if test="amountReceivable != null">`amount_receivable` = #{amountReceivable}, </if>
+			<if test="amountReceived != null">`amount_received` = #{amountReceived}, </if>
+			<if test="discount != null">`discount` = #{discount}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}, </if>
+			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}, </if>
+			<if test="singleCheck != null">`single_check` = #{singleCheck}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_combo_meal where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_combo_meal where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

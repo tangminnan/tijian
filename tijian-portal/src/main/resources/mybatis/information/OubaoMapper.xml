@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tijian.information.dao.OubaoDao">
+
+	<select id="get" resultType="com.tijian.information.domain.OubaoDO">
+		select `id`,`user_id`,`limg`,`rimg`,`add_time` from t_oubao where id = #{value}
+	</select>
+
+
+	 
+	<insert id="save" parameterType="com.tijian.information.domain.OubaoDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_oubao
+		(
+			`user_id`, 
+			`limg`,
+			 `rimg`,
+			`add_time`,
+			check_id
+		)
+		values
+		(
+			#{userId}, 
+			#{limg},
+			#{rimg},
+			#{addTime},
+			#{checkId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.tijian.information.domain.OubaoDO">
+		update t_oubao 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+
+			<if test="addTime != null">`add_time` = #{addTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+
+
+</mapper>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>检查报告</title>
+
+	<script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+
+	<link href="/css/bootstrap.min.css?v=3.3.6" th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
+	<script src="/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/css/css.css" type="text/css">
+	<style>
+		.jiluBox li{float: left;width: 36%;font-style:normal;}
+
+	</style>
+
+</head>
+<body>
+<!--主体内容-->
+<div class="main HdownCon">
+
+    <h3 style="text-align: center">查体报告</h3>
+	<div class="jiluBox">
+
+
+		<div class="box" name="youer-waiyanjiancha">
+			<span>基本信息：</span>
+			<table border="1" cellspacing="0" cellpadding="0">
+				<tbody>
+				<tr>
+					<td width="85">姓名：</td>
+					<td width="85" th:text="${userDO.name}">172</td>
+					<td width="85">身份证号</td>
+					<td width="85" th:text="${userDO.identityCard}"></td>
+				</tr>
+				<tr>
+					<td width="85">性别</td>
+					<td width="85" th:if="${userDO.sex==1}">男</td>
+					<td width="85" th:if="${userDO.sex==2}">女</td>
+					<td width="85">年龄</td>
+					<td width="85" th:text="${userDO.age}"></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="box">
+			<span>检查日期：</span>
+			<table border="1" cellspacing="0" cellpadding="0">
+				<tbody>
+				<tr>
+					<td th:text="${#dates.format(userDO.addTime, 'yyyy-MM-dd')}"></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+		<div class="box" name="youer-waiyanjiancha">
+			<span>身高体重检查：</span>
+			<table border="1" cellspacing="0" cellpadding="0">
+				<tbody>
+				<tr>
+					<td width="85">身高：</td>
+					<td width="85" th:text="${heightweightDO.height}"></td>
+					<td width="85">体重</td>
+					<td width="85" th:text="${heightweightDO.weight}">65</td>
+				</tr>
+				<tr>
+					<td>体重指数：</td>
+					<td width="85" th:text="${heightweightDO.bi}">23.9</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="box" name=youer-hongguangfanshe">
+			<span>眼压检查：</span>
+			<table border="1" cellspacing="0" cellpadding="0">
+				<tbody>
+				<tr>
+					<td width="85">右眼：</td>
+					<td width="85" th:text="${eyePressureDO.eyePressureOd}">12.9</td>
+					<td>左眼：</td>
+					<td width="85" th:text="${eyePressureDO.eyePressureOs}"></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="box" name="youer-shijuexingwei">
+			<span>血压检查：</span>
+			<table border="1" cellspacing="0" cellpadding="0">
+				<tbody>
+				<tr>
+					<td width="85">收缩压：</td>
+					<td width="85" th:text="${bloodPressureDO.systolicPressure}"></td>
+					<td>舒张压：</td>
+					<td width="85" th:text="${bloodPressureDO.diastolicPressure}"></td>
+
+				</tr>
+
+				<tr>
+					<td width="85">脉搏：</td>
+					<td width="85" th:text="${bloodPressureDO.pulse}"></td>
+					<td>平均值：</td>
+					<td width="85" th:text="${bloodPressureDO.avg}"></td>
+
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="box box1">
+			<span>欧宝检查：</span>
+			<table width="80%" border="1" cellspacing="0" cellpadding="0">
+				<tbody>
+				<tr>
+					<td>
+						右眼：
+						<ul>
+							<li th:each="item0:${oubaoDO.rlist}"><img  th:src="${item0}" alt=""/></li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						左眼：
+						<ul>
+							<li th:each="item1:${oubaoDO.llist}"><img  th:src="${item1}" alt=""/></li>
+						</ul>
+					</td>
+				</tr>
+
+				</tbody>
+			</table>
+		</div>
+		<div class="box box1">
+			<span>OCT检查：</span>
+			<table width="80%" border="1" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<td>
+						原始图片文件：
+						<ul>
+							<li th:each="octsimg:${octDO.originalsimg}">
+								<img  th:src="${octsimg}" alt=""/>
+							</li>
+						</ul>
+					</td>
+					</tr>
+
+					<tr>
+						<td>
+							pdf文件：
+							<ul>
+								<li th:each="pdfimg:${octDO.pdfimg}">
+									<img  th:src="${pdfimg}" alt=""/>
+								</li>
+							</ul>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		</div>
+	</div>
+
+
+<div th:include="include :: footer"></div>
+<script>
+</script>
+</body>
+</html>
+
+
+

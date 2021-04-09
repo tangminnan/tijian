@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tijian.information.dao.CheckHistoryDao">
+
+	<select id="get" resultType="com.tijian.information.domain.CheckHistoryDO">
+		select t.`id`, t.process,t.status ,                     u.name,t.`user_id`,t.total_amount,t.yingfu_amount,t.identity_card,t.`add_time`,t.`single_checks` from t_check_history t
+		join t_user u on t.user_id=u.id and t.id = #{value}
+	</select>
+	
+	
+	<select id="getByIdentityCard" resultType="com.tijian.information.domain.CheckHistoryDO">
+		select t.`id`,u.name,t.`user_id`,t.total_amount,t.yingfu_amount,t.identity_card,t.`add_time`,t.`single_checks` from t_check_history t
+		join t_user u on t.user_id=u.id and t.identity_card = #{identityCard}
+		ORDER BY t.id desc limit 1
+	</select>
+
+
+	
+
+	 
+	<insert id="save" parameterType="com.tijian.information.domain.CheckHistoryDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_check_history
+		(
+			`user_id`, 
+
+			`add_time`, 
+			`single_checks`,
+			total_amount,
+			yingfu_amount,
+			identity_card,
+			check_id
+		)
+		values
+		(
+			#{userId}, 
+			#{addTime},
+			#{singleChecks},
+			#{totalAmount},
+			#{yingfuAmount},
+			#{identityCard},
+			#{checkId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.tijian.information.domain.CheckHistoryDO">
+		update t_check_history 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="totalAmount != null">`total_amount` = #{totalAmount}, </if>
+			<if test="yingfuAmount != null">`yingfu_amount` = #{yingfuAmount}, </if>
+
+			<if test="identityCard != null">`identity_card` = #{identityCard}, </if>
+
+
+			<if test="addTime != null">`add_time` = #{addTime}, </if>
+			<if test="singleChecks != null">`single_checks` = #{singleChecks},</if>
+			<if test="process != null">`process` = #{process}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="getByUserId" resultType="com.tijian.information.domain.CheckHistoryDO">
+		select id,single_checks from t_check_history where user_id=#{value}
+		and status=0 order by id desc limit 1
+	</select>
+	
+
+
+</mapper>

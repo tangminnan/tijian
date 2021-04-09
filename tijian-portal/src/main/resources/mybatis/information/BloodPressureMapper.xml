@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tijian.information.dao.BloodPressureDao">
+
+	<select id="get" resultType="com.tijian.information.domain.BloodPressureDO">
+		select `id`,`user_id`,`add_time`,`systolic_pressure`,`diastolic_pressure`,`pulse`,`avg` from t_blood_pressure where id = #{value}
+	</select>
+	 
+	<insert id="save" parameterType="com.tijian.information.domain.BloodPressureDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_blood_pressure
+		(
+			`user_id`, 
+			`add_time`, 
+			`systolic_pressure`, 
+			`diastolic_pressure`, 
+			`pulse`, 
+			`avg`,
+			check_id
+		)
+		values
+		(
+			#{userId}, 
+			#{addTime}, 
+			#{systolicPressure}, 
+			#{diastolicPressure}, 
+			#{pulse}, 
+			#{avg},
+			#{checkId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.tijian.information.domain.BloodPressureDO">
+		update t_blood_pressure 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}, </if>
+			<if test="systolicPressure != null">`systolic_pressure` = #{systolicPressure}, </if>
+			<if test="diastolicPressure != null">`diastolic_pressure` = #{diastolicPressure}, </if>
+			<if test="pulse != null">`pulse` = #{pulse}, </if>
+			<if test="avg != null">`avg` = #{avg}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+</mapper>

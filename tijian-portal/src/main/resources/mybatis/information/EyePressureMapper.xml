@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tijian.information.dao.EyePressureDao">
+
+	<select id="get" resultType="com.tijian.information.domain.EyePressureDO">
+		select `id`,`user_id`,`eye_pressure_od`,`eye_pressure_os`,`add_time` from t_eye_pressure where id = #{value}
+	</select>
+
+
+	<insert id="save" parameterType="com.tijian.information.domain.EyePressureDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_eye_pressure
+		(
+			`user_id`, 
+			`eye_pressure_od`, 
+			`eye_pressure_os`, 
+			`add_time`,
+			check_id
+		)
+		values
+		(
+			#{userId}, 
+			#{eyePressureOd}, 
+			#{eyePressureOs}, 
+			#{addTime},
+			#{checkId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.tijian.information.domain.EyePressureDO">
+		update t_eye_pressure 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="eyePressureOd != null">`eye_pressure_od` = #{eyePressureOd}, </if>
+			<if test="eyePressureOs != null">`eye_pressure_os` = #{eyePressureOs}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+</mapper>

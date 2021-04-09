@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tijian.information.dao.CheckHistoryDao">
+
+	<select id="get" resultType="com.tijian.information.domain.CheckHistoryDO">
+		select t.`id`,t.process,
+			t.status , u.name,t.`user_id`,t.total_amount,t.yingfu_amount,t.identity_card,t.`add_time`,t.`single_checks` from t_check_history t
+		join t_user u on t.user_id=u.id and t.id = #{value}
+	</select>
+	
+	
+	<select id="getByIdentityCard" resultType="com.tijian.information.domain.CheckHistoryDO">
+		select t.`id`,u.name,t.`user_id`,t.total_amount,t.yingfu_amount,t.identity_card,t.`add_time`,t.`single_checks` from t_check_history t
+		join t_user u on t.user_id=u.id and t.identity_card = #{identityCard}
+		ORDER BY t.id desc limit 1
+	</select>
+
+	<select id="list" resultType="com.tijian.information.domain.CheckHistoryDO">
+		select t.`id`,t.process,
+		t.status ,        u.name,t.`user_id`,t.total_amount,t.yingfu_amount,t.identity_card,t.`add_time`,t.`single_checks` from t_check_history t
+		join t_user u on t.user_id=u.id
+        <where>  
+		  		  <if test="id != null and id != ''"> and t.id = #{id} </if>
+		  		  <if test="userId != null and userId != ''"> and t.user_id = #{userId} </if>
+		  		  <if test="addTime != null and addTime != ''"> and t.add_time = #{addTime} </if>
+		  		  <if test="singleChecks != null and singleChecks != ''"> and t.single_checks = #{singleChecks} </if>
+
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by t.id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_check_history
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="singleChecks != null and singleChecks != ''"> and single_checks = #{singleChecks} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.tijian.information.domain.CheckHistoryDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_check_history
+		(
+			`user_id`, 
+
+			`add_time`, 
+			`single_checks`,
+			total_amount,
+			yingfu_amount,
+			identity_card,
+			process,
+			status
+		)
+		values
+		(
+			#{userId}, 
+			#{addTime},
+			#{singleChecks},
+			#{totalAmount},
+			#{yingfuAmount},
+			#{identityCard},
+			#{process},
+			#{status}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.tijian.information.domain.CheckHistoryDO">
+		update t_check_history 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="totalAmount != null">`total_amount` = #{totalAmount}, </if>
+			<if test="yingfuAmount != null">`yingfu_amount` = #{yingfuAmount}, </if>
+
+			<if test="identityCard != null">`identity_card` = #{identityCard}, </if>
+
+
+			<if test="addTime != null">`add_time` = #{addTime}, </if>
+			<if test="singleChecks != null">`single_checks` = #{singleChecks}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_check_history where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_check_history where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

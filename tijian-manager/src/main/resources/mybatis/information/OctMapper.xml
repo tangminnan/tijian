@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tijian.information.dao.OctDao">
+
+	<select id="get" resultType="com.tijian.information.domain.OctDO">
+		select `id`,`user_id`,`check_id`,`pdf`,`img`,`original`,`add_time` from t_oct where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.tijian.information.domain.OctDO">
+		select `id`,`user_id`,`check_id`,`pdf`,`img`,`original`,`add_time` from t_oct
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="checkId != null and checkId != ''"> and check_id = #{checkId} </if>
+		  		  <if test="pdf != null and pdf != ''"> and pdf = #{pdf} </if>
+		  		  <if test="img != null and img != ''"> and img = #{img} </if>
+		  		  <if test="original != null and original != ''"> and original = #{original} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_oct
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="checkId != null and checkId != ''"> and check_id = #{checkId} </if>
+		  		  <if test="pdf != null and pdf != ''"> and pdf = #{pdf} </if>
+		  		  <if test="img != null and img != ''"> and img = #{img} </if>
+		  		  <if test="original != null and original != ''"> and original = #{original} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.tijian.information.domain.OctDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_oct
+		(
+			`user_id`, 
+			`check_id`, 
+			`pdf`, 
+			`img`, 
+			`original`, 
+			`add_time`
+		)
+		values
+		(
+			#{userId}, 
+			#{checkId}, 
+			#{pdf}, 
+			#{img}, 
+			#{original}, 
+			#{addTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.tijian.information.domain.OctDO">
+		update t_oct 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="checkId != null">`check_id` = #{checkId}, </if>
+			<if test="pdf != null">`pdf` = #{pdf}, </if>
+			<if test="img != null">`img` = #{img}, </if>
+			<if test="original != null">`original` = #{original}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_oct where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_oct where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

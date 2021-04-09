@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tijian.information.dao.OctDao">
+
+	<select id="get" resultType="com.tijian.information.domain.OctDO">
+		select `id`,`user_id`,`check_id`,`pdf`,`img`,`original`,`add_time` from t_oct where id = #{value}
+	</select>
+	 
+	<insert id="save" parameterType="com.tijian.information.domain.OctDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_oct
+		(
+			`user_id`, 
+			`check_id`, 
+			`pdf`, 
+			`img`, 
+			`original`, 
+			`add_time`
+		)
+		values
+		(
+			#{userId}, 
+			#{checkId}, 
+			#{pdf}, 
+			#{img}, 
+			#{original}, 
+			#{addTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.tijian.information.domain.OctDO">
+		update t_oct 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="checkId != null">`check_id` = #{checkId}, </if>
+			<if test="pdf != null">`pdf` = #{pdf}, </if>
+			<if test="img != null">`img` = #{img}, </if>
+			<if test="original != null">`original` = #{original}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+
+</mapper>
