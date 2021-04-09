@@ -33,13 +33,4 @@ public class BootdoApplication extends  SpringBootServletInitializer{
                 " _| |__) || \\__. || \\__. || |, _| |_.' /| \\__. | \n" +
                 "|_______/  '.__.'  '.__.' \\__/|______.'  '.__.'  ");
     }
-    @Bean //必须new 一个RestTemplate并放入spring容器当中,否则启动时报错
-    public RestTemplate restTemplate() {
-        HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-
-        httpRequestFactory.setConnectionRequestTimeout(30 * 1000);
-        httpRequestFactory.setConnectTimeout(30 * 3000);
-        httpRequestFactory.setReadTimeout(60 * 10000);
-        return new RestTemplate(httpRequestFactory);
-    }
 }

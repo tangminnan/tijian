@@ -1,5 +1,9 @@
 package com.tijian.system.controller;
 
+import com.tijian.information.domain.ComboMealDO;
+import com.tijian.information.domain.SingleCheckDO;
+import com.tijian.information.service.ComboMealService;
+import com.tijian.information.service.SingleCheckService;
 import io.swagger.models.auth.In;
 
 import org.apache.shiro.SecurityUtils;
@@ -26,6 +30,7 @@ import com.tijian.common.utils.ShiroUtils;
 import com.tijian.system.domain.MenuDO;
 import com.tijian.system.service.MenuService;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -36,6 +41,10 @@ public class LoginController extends BaseController {
 	MenuService menuService;
 	@Autowired
 	FileService fileService;
+	@Autowired
+	private ComboMealService comboMealService;
+	@Autowired
+	private SingleCheckService singleCheckService;
 	@GetMapping({ "/", "" })
 	String welcome(Model model) {
 
@@ -90,7 +99,11 @@ public class LoginController extends BaseController {
 	}
 
 	@GetMapping("/main")
-	String main() {
+	String main(Model model) {
+		List<ComboMealDO> comboMealDOS = comboMealService.list(new HashMap<>());
+		model.addAttribute("comboMealDOS",comboMealDOS);
+		List<SingleCheckDO> singleCheckDOS=singleCheckService.list(new HashMap<>());
+		model.addAttribute("singleCheckDOS",singleCheckDOS);
 		return "main";
 	}
 

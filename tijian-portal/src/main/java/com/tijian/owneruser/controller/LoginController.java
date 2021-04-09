@@ -61,15 +61,15 @@ public class LoginController extends BaseController {
 	   				message.put("msg","该手机号码未注册");
 	   			}
 	   			OwnerUserDO udo= userService.getbyname(phone);
-	   			if(udo.getDeleted()==1){
+	   			if(udo==null || udo.getDeleted()==1){
 	   				message.put("msg","禁止登录，请联系客服");
 	   			}
 	   			subject.login(token);
 	   			udo.setLoginTime(new Date());
 	   			userService.update(udo);
 	   			
-                message.put("chectorId", udo.getChectorId());//教师id
-                message.put("chectorName", udo.getChectorName());//教师名字
+//                message.put("chectorId", udo.getChectorId());//教师id
+//                message.put("chectorName", udo.getChectorName());//教师名字
                 message.put("phone", udo.getPhone());
                 message.put("loginTime", udo.getLoginTime());
 	   			message.put("msg","登录成功");

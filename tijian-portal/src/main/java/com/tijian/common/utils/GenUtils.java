@@ -200,8 +200,8 @@ public class GenUtils {
             return packagePath + "service" + File.separator + "impl" + File.separator + className + "ServiceImpl.java";
         }
 
-        if (template.contains("Controller.java.vm")) {
-            return packagePath + "controller" + File.separator + className + "Controller.java";
+        if (template.contains("ResultController.java.vm")) {
+            return packagePath + "controller" + File.separator + className + "ResultController.java";
         }
 
         if (template.contains("Mapper.xml.vm")) {

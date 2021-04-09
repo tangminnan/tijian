@@ -26,7 +26,7 @@ import com.tijian.system.service.MenuService;
 
 public class UserRealm extends AuthorizingRealm {
 /*	@Autowired
-	UserDao userMapper;
+	UserDODao userMapper;
 	@Autowired
 	MenuService menuService;*/
 

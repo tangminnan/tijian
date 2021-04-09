@@ -10,22 +10,414 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/font-awesome.css">
-   
+    <link href="/css/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+    <style>
+
+       #myTab li{
+           float: left;
+           width: 30%;
+       }
+       body{
+           background-color: #fef1ec;
+       }
+      form{
+
+          margin-top: 4%;
+          margin-left: 1%;
+      }
+       #signupForm11 {
+           margin-top: 10%;
+           margin-left: 30%;
+       }
+      .td{
+          margin-left: 1%;
+          width: 100%;
+          border: solid silver;
+      }
+      /* .td tr{
+           margin-left: 1%;
+           width: 100%;
+           border: solid silver;
+       }*/
+       /* .td tr{
+            border: dotted 1px silver;
+        }*/
+      /* .td td{
+           border: dotted 1px silver;
+       }*/
+        h3{
+            font-size: 20px;
+            text-align: center;
+        }
+        .ppt{
+            font-size: 15px;
+            color: brown;
+            margin-left: 1%;
+        }
+   </style>
 </head>
 <body>
 
-<div class="panel panel-default" style="background-color: #EEEEEE; top: 1px;">
+<!--<div class="panel panel-default" style="background-color: #EEEEEE; top: 1px;">
     <div class="panel-heading"> <h3>&nbsp;&nbsp;&nbsp;欢迎登录体检数据平台管理系统</h3></div>
-    
-   
-   
+</div>-->
 
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a class="btn btn-success btn-xs" href="#xinjianchati" mce_href="#" style="text-decoration: none;">新建查体</a></li>
+        <li><a class="btn btn-success btn-xs" href="#zhiyindandandayin" mce_href="#" style="text-decoration: none;">指引单打印</a></li>
+    </ul>
+
+
+<div class="tab-content">
+    <div class="tab-pane active " id="xinjianchati">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content  ">
+        <form class="form-horizontal" id="signupForm">
+           <div class="form-group">
+               <label class="col-sm-1 control-label">身份证号：</label>
+               <div class="col-sm-5">
+                   <input id="identityCard" name="identityCard" class="form-control" type="text">
+               </div>
+               <label class="col-sm-1 control-label">姓名：</label>
+               <div class="col-sm-5">
+                   <input id="name" name="name" class="form-control" type="text">
+                   <input id="userId" name="userId" class="form-control" type="hidden">
+               </div>
+           </div>
+
+           <div class="form-group">
+               <label class="col-sm-1 control-label">出生年月：</label>
+               <div class="col-sm-5">
+                   <input id="birthday" name="birthday" class="form-control" type="text">
+               </div>
+               <label class="col-sm-1 control-label">性别：</label>
+               <div class="col-sm-5">
+                   <select id="sex" name="sex" class="form-control">
+                       <option value="0">请选择</option>
+                       <option value="1">男</option>
+                       <option value="2">女</option>
+                   </select>
+               </div>
+           </div>
+
+
+
+           <div class="form-group">
+               <label class="col-sm-1 control-label">手机号：</label>
+               <div class="col-sm-5">
+                   <input id="phone" name="phone" class="form-control" type="text">
+               </div>
+               <label class="col-sm-1 control-label">年龄：</label>
+               <div class="col-sm-5">
+                   <input id="age" name="age" class="form-control" type="text">
+               </div>
+           </div>
+           <div class="form-group">
+               <label class="col-sm-1 control-label">套餐项目：</label>
+               <div class="col-sm-5">
+                   <select id="comboName" name="comboName" class="form-control">
+                       <option value=""></option>
+                       <option th:each="select:${comboMealDOS}" th:value="${select.id}" th:text="${select.comboName}"></option>
+                   </select>
+               </div>
+               <label class="col-sm-1 control-label">单项项目：</label>
+               <div class="col-sm-5">
+                   <select id="singleCheck" name="singleCheck" class="form-control" >
+                       <option value=""></option>
+                       <option th:each="single:${singleCheckDOS}" th:value="${single.pin}" th:text="${single.singleName}"></option>
+                   </select>
+               </div>
+           </div>
+        </form>
+                    <h3>检查项目</h3>
+                    <table class="td">
+                            <tr>
+                                <td>检查项目</td>
+                                <td>项目拼写</td>
+                                <td>项目代码</td>
+                                <td>项目费用</td>
+                            </tr>
+                    </table>
+                    <div class="ppt">
+
+                            <p id="taocanfeiyong">套餐费用:</p>
+                            <p id="totalPrice">总费用:</p>
+                            <p>应付费用:
+                                <input id="yingfufeiyong" style="border-left: none;border-right: none;border-top: none;border-bottom: solid 0.5px;  background-color:#fef1ec">
+                            </p>
+
+                    </div>
+                    <div  style="text-align: center">
+                        <button type="submit" onclick="feiyongdanconfirm()" class="btn btn-primary">费用单确认</button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="tab-pane" id="zhiyindandandayin">
+        <form class="form-horizontal" id="signupForm11">
+            <div class="form-group">
+                <label class="col-sm-1 control-label">身份证号：</label>
+                <div class="col-sm-5">
+                    <input id="identityCard11" name="identityCard11" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label">姓名：</label>
+                <div class="col-sm-5">
+                    <input id="name11" name="name" class="form-control" type="text">
+                    <input id="userId11" name="userId" class="form-control" type="hidden">
+                </div>
+            </div>
+
+
+        </form>
+        <div style="text-align: center">
+            <button onclick="zhiyindan()" class="btn btn-primary">指引单打印</button>
+        </div>
+
+    </div>
 </div>
+<object id=CVR_IDCard height=0 width=0 type="application/cert-reader"
+        classid=clsid:10946843-7507-44FE-ACE8-2B3483D179B7 name=CVR_IDCard>
+    <p style="color:#FF0000;">控件不可用，可能未正确安装控件及驱动，或者控件未启用。</p>
+</object>
 <div th:include="include :: footer"></div>
 
 				
 				
 <script src="/js/plugins/echarts/echarts.js"></script>
+<script th:inline="javascript">
+        laydate.render({
+            elem: '#birthday',
+            type: 'date',
+        });
+
+    $("#identityCard").focus();
+    $('#myTab a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+        if($(this).text()=="新建查体")
+            $("#identityCard").focus();
+    });
+
+    let comboMealDOS=[[${comboMealDOS}]];
+    let cMap = new Map();
+    for(let entry of  comboMealDOS){
+        cMap.set(entry.id,entry);
+    }
+
+    let singleCheck=[[${singleCheckDOS}]];
+    let sMap = new Map();
+    for(let entry of  singleCheck){
+        sMap.set(entry.pin,entry);
+    }
+
+    /**
+     *   身份证号查询用户数据
+     * */
+
+    $("#identityCard").change(function(){
+        $("#name").val("");
+        $("#birthday").val("");
+        $("#sex").val("");
+        $("#phone").val("");
+        $("#age").val("");
+        $("#userId").val("");
+        let identityCard = $("#identityCard").val();
+        $.ajax({
+            cache : true,
+             type : "GET",
+             url : "/information/user/getUserInfo",
+             data :{identityCard},
+             async : false,
+             error : function(request) {
+                 parent.layer.alert("Connection error");
+             },
+             success : function(data) {
+                console.info(data)
+                 if (data.code == 0) {
+                    let userDO = data.userDO;
+                    $("#name").val(userDO.name);
+                    $("#birthday").val(userDO.birthday);
+                    $("#sex").val(userDO.sex);
+                    $("#phone").val(userDO.phone);
+                    $("#age").val(userDO.age);
+                    $("#userId").val(userDO.id);
+                 }
+
+             }
+         });
+    });
+    /**
+     *  套餐选择
+     */
+    let pinArry=[];
+    $("#comboName").change(function(){
+        pinArry=[];
+        let id=  $(this).val();
+        let entry=cMap.get(Number.parseInt(id));
+        let singlePin=entry.singleCheck.split(",");
+        let tr=`<tr><td>检查项目</td><td>项目拼写</td><td>项目代码</td><td>项目费用</td></tr>`;
+        for(let pin of singlePin){1
+            if(pinArry.includes(pin))
+                continue;
+            pinArry.push(pin);
+            let scheck=sMap.get(pin);
+            tr+=` <tr>
+            <td>${scheck.singleName}</td>
+            <td>${scheck.pin}</td>
+            <td>${scheck.singleName}</td>
+            <td>${scheck.price}</td>
+            </tr>`;
+        }
+        $(".td").html(tr);
+        $("#taocanfeiyong").text("套餐费用:    "+entry.amountReceived);
+        $("#totalPrice").text("总费用:"+entry.amountReceived);
+        $("#yingfufeiyong").val(entry.amountReceived);
+    });
+
+    /**
+     *  单项选择
+     */
+
+    $("#singleCheck").change(function(){
+        let pin=  $(this).val();
+        let entry=sMap.get(pin);
+        if(pinArry.includes(pin))
+            return;
+        else{
+            pinArry.push(pin);
+            let tr=` <tr>
+            <td>${entry.singleName}</td>
+            <td>${entry.pin}</td>
+            <td>${entry.singleName}</td>
+            <td>${entry.price}</td>
+            </tr>`;
+          $(".td").append(tr);
+          let price = entry.price;
+          let yingfufeiyong=$("#yingfufeiyong").val();
+          if(yingfufeiyong==="") yingfufeiyong=0;
+          let totalPrice= price+Number.parseFloat(yingfufeiyong);
+          $("#totalPrice").text("总费用:"+totalPrice);
+          $("#yingfufeiyong").val(totalPrice);
+        }
+
+    })
+
+    function feiyongdanconfirm(){
+        let identityCard=$("#identityCard").val();
+        let name=$("#name").val();
+        let birthday=$("#birthday").val();
+        let sex=$("#sex").val();
+        let age=$("#age").val();
+        let phone=$("#phone").val();
+        let userId = $("#userId").val();
+        let check = pinArry.join(",");
+        let totalPrice=$("#totalPrice").text().substring(4);
+        let yingfuPrice = $("#yingfufeiyong").val();
+        if(identityCard===""){
+            alert("身份账号不可为空");
+            return ;
+        }
+        if(phone===""){
+            alert("手机号不可以为空");
+            return;
+        }
+
+        if(name===""){
+            alert("姓名不可以为空");
+            return;
+        }
+        if(pinArry.length==0){
+            alert("必须选择检查项目");
+            return ;
+        }
+
+
+        $.ajax({
+            cache : true,
+            type : "POST",
+            url : "/information/checkHistory/save",
+            data :{userId,phone,identityCard,name,birthday,sex,age,check,totalPrice,yingfuPrice},
+            async : false,
+            error : function(request) {
+                parent.layer.alert("Connection error");
+            },
+            success : function(data) {
+                if (data.code == 0) {
+                        console.info(data.msg);
+                    window.open("/information/checkHistory/print?id="+data.msg);
+                } else {
+                    parent.layer.alert(data.msg)
+                }
+
+            }
+        });
+    }
+
+    function zhiyindan(){
+        console.info("指引单打印");
+        let identityCard=$("#identityCard11").val();
+        if(identityCard===""){
+            alert("必须选择身份证号");
+            return;
+        }
+        window.open("/information/checkHistory/zhiyindanprint?identityCard="+identityCard);
+    }
+</script>
+<script>
+    //判断是否为IE浏览器
+    if (!!window.ActiveXObject || "ActiveXObject" in window) {
+        // setInterval("readCert()",1000);
+        setInterval("ReadIDCard()",1000);
+    };
+    //判断是否为搜狗浏览器
+    if(navigator.userAgent.toLowerCase().indexOf('se 2.x')>-1 ? true : false) {
+        // setInterval("readCert()",1000);
+        setInterval("ReadIDCard()",1000);
+    };
+    function ReadIDCard() {
+        var ret = CVR_IDCard.ReadCard();
+        if (ret == "0"){
+            fillForm();
+            return;
+        }
+
+        // alert("读卡错误,错误原因:" + ret);
+    }
+
+    function fillForm() {
+        var pName=CVR_IDCard.Name;
+        var pSex=CVR_IDCard.Sex;
+        var pNation=CVR_IDCard.Nation;
+        var pBorn=CVR_IDCard.Born;
+        var pAddress=CVR_IDCard.Address;
+        var pCardNo=CVR_IDCard.CardNo;
+        var pPolice=CVR_IDCard.IssuedAt;
+        var pActivityLFrom=CVR_IDCard.EffectedDate;
+        var pActivityLTo=CVR_IDCard.ExpiredDate;
+        var pDeviceNo=CVR_IDCard.CardReaderId;
+        var pPhotoBuffer=CVR_IDCard.Picture;
+
+        document.getElementById("studentName").value = pName;//姓名
+        if (pSex==1){ //性别 1：男 0：女
+            $("#studentSex1").prop("checked",true);
+        } else{
+            $("#studentSex2").prop("checked",true);
+        }
+        document.getElementById("nation").value = pNation;//民族
+        document.getElementById("birthday").value = pBorn.replace(/^(\d{4})(\d{2})(\d{2})$/, "$1-$2-$3");//出生年月
+        document.getElementById("address").value = pAddress;//户籍
+        document.getElementById("identityCard").value = pCardNo;//身份证号
+    }
+</script>
 
 </body>
 </html>
