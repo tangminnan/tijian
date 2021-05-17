@@ -6,7 +6,7 @@
     <groupId>com.tijian</groupId>
     <artifactId>tijian-manager</artifactId>
     <version>1.6.9</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 	 
     <name>tijian-manager</name>
     <description>Demo project for Spring Boot</description>
@@ -312,7 +312,7 @@
         </dependency>
 		
         <!--war包部署需要-->
-        <dependency>
+       <!-- <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
@@ -327,7 +327,7 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency>-->
          <!--  <dependency>
           	<groupId>org.scala-lang</groupId>
           	<artifactId>scala-library</artifactId>

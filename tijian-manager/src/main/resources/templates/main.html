@@ -126,7 +126,7 @@
                <div class="col-sm-5">
                    <select id="singleCheck" name="singleCheck" class="form-control" >
                        <option value=""></option>
-                       <option th:each="single:${singleCheckDOS}" th:value="${single.pin}" th:text="${single.singleName}"></option>
+                       <option th:each="single:${singleCheckDOS}" th:value="${single.pin}" th:text="${single.parentItem}"></option>
                    </select>
                </div>
            </div>
@@ -190,8 +190,8 @@
 </object>
 <div th:include="include :: footer"></div>
 
-				
-				
+
+
 <script src="/js/plugins/echarts/echarts.js"></script>
 <script th:inline="javascript">
         laydate.render({
@@ -259,21 +259,24 @@
      *  套餐选择
      */
     let pinArry=[];
+    let itemArry=[];
     $("#comboName").change(function(){
         pinArry=[];
+        itemArry=[];
         let id=  $(this).val();
         let entry=cMap.get(Number.parseInt(id));
         let singlePin=entry.singleCheck.split(",");
         let tr=`<tr><td>检查项目</td><td>项目拼写</td><td>项目代码</td><td>项目费用</td></tr>`;
-        for(let pin of singlePin){1
+        for(let pin of singlePin){
             if(pinArry.includes(pin))
                 continue;
             pinArry.push(pin);
             let scheck=sMap.get(pin);
+            itemArry.push(scheck.parentItem);
             tr+=` <tr>
-            <td>${scheck.singleName}</td>
+            <td>${scheck.parentItem}</td>
             <td>${scheck.pin}</td>
-            <td>${scheck.singleName}</td>
+            <td>${scheck.parentItem}</td>
             <td>${scheck.price}</td>
             </tr>`;
         }
@@ -294,10 +297,11 @@
             return;
         else{
             pinArry.push(pin);
+            itemArry.push(entry.parentItem);
             let tr=` <tr>
-            <td>${entry.singleName}</td>
+            <td>${entry.parentItem}</td>
             <td>${entry.pin}</td>
-            <td>${entry.singleName}</td>
+            <td>${entry.parentItem}</td>
             <td>${entry.price}</td>
             </tr>`;
           $(".td").append(tr);
@@ -320,6 +324,7 @@
         let phone=$("#phone").val();
         let userId = $("#userId").val();
         let check = pinArry.join(",");
+        let itemcheck = itemArry.join(",")
         let totalPrice=$("#totalPrice").text().substring(4);
         let yingfuPrice = $("#yingfufeiyong").val();
         if(identityCard===""){
@@ -345,7 +350,7 @@
             cache : true,
             type : "POST",
             url : "/information/checkHistory/save",
-            data :{userId,phone,identityCard,name,birthday,sex,age,check,totalPrice,yingfuPrice},
+            data :{userId,phone,identityCard,name,birthday,sex,age,check,itemcheck,totalPrice,yingfuPrice},
             async : false,
             error : function(request) {
                 parent.layer.alert("Connection error");

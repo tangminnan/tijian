@@ -8,8 +8,8 @@ import java.util.Map;
 import com.tijian.common.utils.PageUtils;
 import com.tijian.common.utils.Query;
 import com.tijian.common.utils.R;
-import com.tijian.information.domain.SingleCheckDO;
-import com.tijian.information.service.SingleCheckService;
+import com.tijian.information.domain.CheckItemDO;
+import com.tijian.information.service.CheckItemService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -38,7 +38,7 @@ public class ComboMealController {
 	@Autowired
 	private ComboMealService comboMealService;
 	@Autowired
-	private SingleCheckService singleCheckService;
+	private CheckItemService checkItemService;
 	
 	@GetMapping()
 	@RequiresPermissions("information:comboMeal:comboMeal")
@@ -61,7 +61,9 @@ public class ComboMealController {
 	@GetMapping("/add")
 	@RequiresPermissions("information:comboMeal:add")
 	String add(Model model){
-		List<SingleCheckDO> singleCheckDOS=singleCheckService.list(new HashMap<>());
+		Map<String,Object> paramsMap = new HashMap<>();
+		paramsMap.put("parentId",0);
+		List<CheckItemDO> singleCheckDOS=checkItemService.list(paramsMap);
 		model.addAttribute("singleCheckDOS",singleCheckDOS);
 	    return "information/comboMeal/add";
 	}
@@ -71,7 +73,9 @@ public class ComboMealController {
 	String edit(@PathVariable("id") Long id,Model model){
 		ComboMealDO comboMeal = comboMealService.get(id);
 		model.addAttribute("comboMeal", comboMeal);
-		List<SingleCheckDO> singleCheckDOS=singleCheckService.list(new HashMap<>());
+		Map<String,Object> paramsMap = new HashMap<>();
+		paramsMap.put("parentId",0);
+		List<CheckItemDO> singleCheckDOS=checkItemService.list(paramsMap);
 		model.addAttribute("singleCheckDOS",singleCheckDOS);
 	    return "information/comboMeal/edit";
 	}

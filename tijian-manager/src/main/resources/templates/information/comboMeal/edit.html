@@ -28,7 +28,7 @@
 								<div class="col-sm-8">
 									<select id="singleCheck" name="singleCheck" class="form-control selectpicker bla bla bli" multiple title="请选择">
 										<option value=""></option>
-										<option th:each="select:${singleCheckDOS}" th:value="${select.pin}" th:text="${select.singleName}"></option>
+										<option th:each="select:${singleCheckDOS}" th:value="${select.pin}" th:text="${select.parentItem}"></option>
 									</select>
 								</div>
 							</div>

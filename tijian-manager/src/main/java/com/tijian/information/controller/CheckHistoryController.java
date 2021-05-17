@@ -1,5 +1,6 @@
 package com.tijian.information.controller;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 检查记录表
@@ -89,7 +91,7 @@ public class CheckHistoryController {
 	@Transactional
 	public R save(Long  userId,String phone,
 				  String identityCard, String name, String birthday,
-				  Integer sex, String age, String check, BigDecimal totalPrice, BigDecimal yingfuPrice){
+				  Integer sex, String age, String check, String itemcheck,BigDecimal totalPrice, BigDecimal yingfuPrice){
 		Map<String,Object> paramsMap = new HashMap<String,Object>();
 		paramsMap.put("identityCard",identityCard.trim());
 		List<UserDO> userDOS = userDOService.list(paramsMap);
@@ -108,7 +110,8 @@ public class CheckHistoryController {
 			checkHistoryDO.setAddTime(new Date());
 			checkHistoryDO.setTotalAmount(totalPrice);
 			checkHistoryDO.setYingfuAmount(yingfuPrice);
-			checkHistoryDO.setSingleChecks(check);
+			checkHistoryDO.setPins(check);
+			checkHistoryDO.setSingleChecks(itemcheck);
 			checkHistoryDO.setUserId(userId);
 			checkHistoryDO.setIdentityCard(identityCard);
 			checkHistoryDO.setProcess(0);
@@ -271,6 +274,15 @@ public class CheckHistoryController {
 		}
 		return "/information/checkHistory/report";
 
+	}
+
+	/**
+	 *  批量导入检查
+	 */
+	@PostMapping("importcheck")
+	@ResponseBody
+	public R importcheck(MultipartFile file) throws IOException {
+		return checkHistoryService.importcheck(file);
 	}
 	
 }

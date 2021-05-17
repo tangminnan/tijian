@@ -113,5 +113,14 @@ public class SingleCheckController {
 		singleCheckService.batchRemove(ids);
 		return R.ok();
 	}
+
+	/**
+	 * 新增检查项目
+	 * @return
+	 */
+	@GetMapping("/checkadd")
+	public String checkadd(){
+		return "information/singleCheck/checkadd";
+	}
 	
 }

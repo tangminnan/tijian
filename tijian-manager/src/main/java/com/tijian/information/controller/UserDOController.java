@@ -125,6 +125,15 @@ public class UserDOController {
 		userService.update(user);
 		return R.ok();
 	}
+
+	/**
+	 *  批量导入检查项
+	 * @return
+	 */
+	@GetMapping("importcheck")
+	public String importcheck(Model model){
+		return "/information/user/importcheck";
+	}
 	
 	/**
 	 * 删除

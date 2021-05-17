@@ -159,3 +159,18 @@ function batchRemove() {
 
 	});
 }
+
+/**
+ *  检查项目新增
+ */
+function checkadd() {
+   let large =  layer.open({
+        type : 2,
+        title : '新增检查项目',
+        maxmin : true,
+        shadeClose : false, // 点击遮罩关闭层
+        area : [ '800px', '520px' ],
+        content : prefix + '/checkadd' // iframe的url
+    });
+   layer.full(large);
+}

@@ -61,7 +61,8 @@
 			yingfu_amount,
 			identity_card,
 			process,
-			status
+			status,
+			pins
 		)
 		values
 		(
@@ -72,7 +73,8 @@
 			#{yingfuAmount},
 			#{identityCard},
 			#{process},
-			#{status}
+			#{status},
+			#{pins}
 		)
 	</insert>
 	 

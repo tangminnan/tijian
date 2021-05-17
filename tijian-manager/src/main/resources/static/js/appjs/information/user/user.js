@@ -143,3 +143,17 @@ function erweima(id) {
         content : "/information/user/erweima/"+id
     });
 }
+
+/**
+ *  批量导入检查
+ */
+function importcheck(){
+    layer.open({
+        type : 2,
+        title : '检查导入',
+        maxmin : true,
+        shadeClose : false, // 点击遮罩关闭层
+        area : [ '800px', '300px' ],
+        content : prefix + '/importcheck'// iframe的url
+    });
+}

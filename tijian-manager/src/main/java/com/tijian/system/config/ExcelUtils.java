@@ -3,6 +3,7 @@ package com.tijian.system.config;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.mail.Multipart;
@@ -11,6 +12,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
@@ -120,5 +122,25 @@ public class ExcelUtils {
 		}
 		return cellvalue;
 
+	}
+
+	public static String getCellFormatValue(Cell cell, CellType cellType) {
+		String result=null;
+		if(cell!=null){
+			cell.setCellType(cellType);
+			switch(cellType){
+				case STRING: {
+					result=cell.getStringCellValue();
+					break;
+				}
+				case FORMULA:{
+					Date date = cell.getDateCellValue();
+					result = new SimpleDateFormat("yyyy-MM-dd").format(date);
+					break;
+				}
+
+			}
+		}
+		return result;
 	}
 }

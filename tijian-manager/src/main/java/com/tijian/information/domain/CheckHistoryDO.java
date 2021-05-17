@@ -28,6 +28,8 @@ public class CheckHistoryDO implements Serializable {
 	private Date addTime;
 	//检查项目
 	private String singleChecks;
+	//检查项目拼音代码
+	private String pins;
 	//身份证号
 	private String identityCard;
 	//用户名
@@ -132,5 +134,13 @@ public class CheckHistoryDO implements Serializable {
 
 	public void setProcess(Integer process) {
 		this.process = process;
+	}
+
+	public String getPins() {
+		return pins;
+	}
+
+	public void setPins(String pins) {
+		this.pins = pins;
 	}
 }
