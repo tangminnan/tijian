@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tijian.information.dao.CheckItemDao">
+
+	<select id="get" resultType="com.tijian.information.domain.CheckItemDO">
+		select `id`,`parent_item`,`children_item`,`price`,`add_time`,`delete_flag`,`pin`,`parent_id` from t_check_item where id = #{value}
+	</select>
+	
+	<select id="getSub" resultType="com.tijian.information.domain.CheckItemDO">
+		select sub.`id`,parent.`parent_item`,sub.`children_item`,sub.`parent_id` from t_check_item sub
+		join t_check_item parent on sub.parent_id=parent.id and  sub.id = #{value}
+	</select>
+
+	<select id="list" resultType="com.tijian.information.domain.CheckItemDO">
+		select `id`,`parent_item`,`children_item`,`price`,`add_time`,`delete_flag`,`pin`,`parent_id` from t_check_item
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="parentItem != null and parentItem != ''"> and parent_item = #{parentItem} </if>
+		  		  <if test="childrenItem != null and childrenItem != ''"> and children_item = #{childrenItem} </if>
+		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="pin != null and pin != ''"> and pin = #{pin} </if>
+		  		  <if test="parentId != null"> and parent_id = #{parentId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_check_item
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="parentItem != null and parentItem != ''"> and parent_item = #{parentItem} </if>
+		  		  <if test="childrenItem != null and childrenItem != ''"> and children_item = #{childrenItem} </if>
+		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="pin != null and pin != ''"> and pin = #{pin} </if>
+		  		  <if test="parentId != null"> and parent_id = #{parentId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.tijian.information.domain.CheckItemDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_check_item
+		(
+			`parent_item`, 
+			`children_item`, 
+			`price`, 
+			`add_time`, 
+			`delete_flag`, 
+			`pin`, 
+			`parent_id`
+		)
+		values
+		(
+			#{parentItem}, 
+			#{childrenItem}, 
+			#{price}, 
+			#{addTime}, 
+			#{deleteFlag}, 
+			#{pin}, 
+			#{parentId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.tijian.information.domain.CheckItemDO">
+		update t_check_item 
+		<set>
+			<if test="parentItem != null">`parent_item` = #{parentItem}, </if>
+			<if test="childrenItem != null">`children_item` = #{childrenItem}, </if>
+			<if test="price != null">`price` = #{price}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}, </if>
+			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}, </if>
+			<if test="pin != null">`pin` = #{pin}, </if>
+			<if test="parentId != null">`parent_id` = #{parentId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_check_item where id = #{value}
+	</delete>
+	
+	<delete id="removeByParentId">
+		delete from t_check_item where parent_id=#{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_check_item where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

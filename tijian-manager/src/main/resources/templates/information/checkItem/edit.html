@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${checkItem.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">项目名称：</label>
+								<div class="col-sm-8">
+									<input id="parentItem" name="parentItem" th:value="${checkItem.parentItem}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group" th:each="sub,subIndex:${checkItem.checkItemDOS}">
+								<label class="col-sm-3 control-label">细项名称：</label>
+								<div class="col-sm-8">
+									<input  name="list" th:value="${sub.childrenItem}" class="form-control" type="text">
+								</div><img th:if="${subIndex.index==0}" src="../../img/add.png" width="20" height="20" onclick="add(this)">
+															<img th:if="${subIndex.index!=0}" src="../../img/dec.jpg" width="20" height="20" onclick="dec(this)">
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">价格：</label>
+								<div class="col-sm-8">
+									<input id="price" name="price" th:value="${checkItem.price}" class="form-control" type="text">
+								</div>
+							</div>
+
+
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">拼音：</label>
+								<div class="col-sm-8">
+									<input id="pin" name="pin" th:value="${checkItem.pin}" class="form-control" type="text">
+								</div>
+							</div>
+
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+
+	<div class="form-group" style="display: none" id="xxmc">
+		<label class="col-sm-3 control-label">细项名称：</label>
+		<div class="col-sm-8">
+			<input name="list" class="form-control" type="text" name="list">
+		</div>  <img src="../../img/dec.jpg" width="20" height="20" onclick="dec(this)">
+	</div>
+
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/information/checkItem/edit.js">
+	</script>
+
+	<script type="text/javascript" charset="UTF-8">
+        /**
+         *  添加行
+         */
+        function add(obj){
+            let dom=$("#xxmc").clone();
+            $(dom).show();
+            $(obj).parents(".form-group").after(dom);
+        }
+        /**
+         *  删除行
+         */
+        function dec(obj){
+            $(obj).parents(".form-group").remove();
+        }
+	</script>
+</body>
+</html>
