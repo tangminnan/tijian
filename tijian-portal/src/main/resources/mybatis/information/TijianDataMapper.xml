@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dingshi.information.dao.TijianDataDao">
+
+	<select id="get" resultType="com.dingshi.information.domain.TijianDataDO">
+		select `id`,`user_id`,`history_id`,`single_checks`,`pins`,`result`,`suggest`,`chector`,`identity_card` from t_tijian_data where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.dingshi.information.domain.TijianDataDO">
+		select `id`,`user_id`,`history_id`,`single_checks`,`pins`,`result`,`suggest`,`chector`,`identity_card` from t_tijian_data
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="historyId != null and historyId != ''"> and history_id = #{historyId} </if>
+		  		  <if test="singleChecks != null and singleChecks != ''"> and single_checks = #{singleChecks} </if>
+		  		  <if test="pins != null and pins != ''"> and pins = #{pins} </if>
+		  		  <if test="result != null and result != ''"> and result = #{result} </if>
+		  		  <if test="suggest != null and suggest != ''"> and suggest = #{suggest} </if>
+		  		  <if test="chector != null and chector != ''"> and chector = #{chector} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_tijian_data
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="historyId != null and historyId != ''"> and history_id = #{historyId} </if>
+		  		  <if test="singleChecks != null and singleChecks != ''"> and single_checks = #{singleChecks} </if>
+		  		  <if test="pins != null and pins != ''"> and pins = #{pins} </if>
+		  		  <if test="result != null and result != ''"> and result = #{result} </if>
+		  		  <if test="suggest != null and suggest != ''"> and suggest = #{suggest} </if>
+		  		  <if test="chector != null and chector != ''"> and chector = #{chector} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.dingshi.information.domain.TijianDataDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_tijian_data
+		(
+			`user_id`, 
+			`history_id`, 
+			`single_checks`, 
+			`pins`, 
+			`result`, 
+			`suggest`, 
+			`chector`, 
+			`identity_card`,
+			add_time
+		)
+		values
+		(
+			#{userId}, 
+			#{historyId}, 
+			#{singleChecks}, 
+			#{pins}, 
+			#{result}, 
+			#{suggest}, 
+			#{chector}, 
+			#{identityCard},
+			#{addTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.dingshi.information.domain.TijianDataDO">
+		update t_tijian_data 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="historyId != null">`history_id` = #{historyId}, </if>
+			<if test="singleChecks != null">`single_checks` = #{singleChecks}, </if>
+			<if test="pins != null">`pins` = #{pins}, </if>
+			<if test="result != null">`result` = #{result}, </if>
+			<if test="suggest != null">`suggest` = #{suggest}, </if>
+			<if test="chector != null">`chector` = #{chector}, </if>
+			<if test="identityCard != null">`identity_card` = #{identityCard}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_tijian_data where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_tijian_data where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
