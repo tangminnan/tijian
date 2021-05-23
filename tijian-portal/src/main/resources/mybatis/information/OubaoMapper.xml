@@ -16,7 +16,9 @@
 			`limg`,
 			 `rimg`,
 			`add_time`,
-			check_id
+			check_id,
+			suggest,
+			name
 		)
 		values
 		(
@@ -24,7 +26,9 @@
 			#{limg},
 			#{rimg},
 			#{addTime},
-			#{checkId}
+			#{checkId},
+			#{suggest},
+			#{name}
 		)
 	</insert>
 	 

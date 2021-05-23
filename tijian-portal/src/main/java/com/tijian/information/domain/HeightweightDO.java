@@ -29,6 +29,10 @@ public class HeightweightDO implements Serializable {
 	private String bi;
 	//本次检查记录id
 	private Long checkId;
+	//医生的建议
+	private String suggest;
+	//医生的姓名
+	private String name;
 
 	/**
 	 * 设置：id
@@ -109,5 +113,21 @@ public class HeightweightDO implements Serializable {
 
 	public void setCheckId(Long checkId) {
 		this.checkId = checkId;
+	}
+
+	public String getSuggest() {
+		return suggest;
+	}
+
+	public void setSuggest(String suggest) {
+		this.suggest = suggest;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

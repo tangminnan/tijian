@@ -15,7 +15,9 @@
 			`pdf`, 
 			`img`, 
 			`original`, 
-			`add_time`
+			`add_time`,
+			suggest,
+			name
 		)
 		values
 		(
@@ -24,7 +26,9 @@
 			#{pdf}, 
 			#{img}, 
 			#{original}, 
-			#{addTime}
+			#{addTime},
+			#{suggest},
+			#{name}
 		)
 	</insert>
 	 

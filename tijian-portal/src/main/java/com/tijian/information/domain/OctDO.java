@@ -29,6 +29,10 @@ public class OctDO implements Serializable {
 	private String original;
 	//检查日期
 	private Date addTime;
+	//医生的建议
+	private String suggest;
+	//医生的姓名
+	private String name;
 
 	/**
 	 * 设置：id
@@ -113,5 +117,21 @@ public class OctDO implements Serializable {
 	 */
 	public Date getAddTime() {
 		return addTime;
+	}
+
+	public String getSuggest() {
+		return suggest;
+	}
+
+	public void setSuggest(String suggest) {
+		this.suggest = suggest;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

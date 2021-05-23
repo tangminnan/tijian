@@ -15,7 +15,9 @@
 			`height`, 
 			`weight`, 
 			`bi`,
-			check_id
+			check_id,
+			suggest,
+			name
 		)
 		values
 		(
@@ -24,7 +26,9 @@
 			#{height}, 
 			#{weight}, 
 			#{bi},
-			#{checkId}
+			#{checkId},
+			#{suggest},
+			#{name}
 		)
 	</insert>
 	 

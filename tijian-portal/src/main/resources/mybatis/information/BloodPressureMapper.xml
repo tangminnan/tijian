@@ -16,7 +16,9 @@
 			`diastolic_pressure`, 
 			`pulse`, 
 			`avg`,
-			check_id
+			check_id,
+			suggest,
+			name
 		)
 		values
 		(
@@ -26,7 +28,9 @@
 			#{diastolicPressure}, 
 			#{pulse}, 
 			#{avg},
-			#{checkId}
+			#{checkId},
+			#{suggest},
+			#{name}
 		)
 	</insert>
 	 

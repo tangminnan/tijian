@@ -15,7 +15,9 @@
 			`eye_pressure_od`, 
 			`eye_pressure_os`, 
 			`add_time`,
-			check_id
+			check_id,
+			suggest,
+			name
 		)
 		values
 		(
@@ -23,7 +25,9 @@
 			#{eyePressureOd}, 
 			#{eyePressureOs}, 
 			#{addTime},
-			#{checkId}
+			#{checkId},
+			#{suggest},
+			#{name}
 		)
 	</insert>
 	 
