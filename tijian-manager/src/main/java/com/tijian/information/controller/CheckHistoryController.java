@@ -118,7 +118,10 @@ public class CheckHistoryController {
 			checkHistoryDO.setStatus(0);
 			int result= checkHistoryService.save(checkHistoryDO);
 			if(result>0) {
-				return R.ok(String.valueOf(checkHistoryDO.getId()));
+	//			return R.ok(String.valueOf(checkHistoryDO.getId()));
+				String code = BarCodeUtils.generateBarCode128(checkHistoryDO.getUserId().toString(), 10.0, 0.3, true, true);//条形码
+				return R.ok(String.valueOf("data:image/png;base64,"+code));
+
 			}
 		}
 

@@ -55,7 +55,46 @@
             color: brown;
             margin-left: 1%;
         }
+
+        #fyd{
+            display: none;
+        }
+     /*  @media print{
+           #fyd{
+               width: 224px; border:1px solid #000000;
+           }
+           #fydn{
+               width: 224px; float: left;width:90%; margin-left: 8px; margin-top: 30px;position: relative;border:2px solid #000000;
+           }
+           #printCode{
+               width: 100% !important; height: auto !important;
+           }
+       }*/
    </style>
+    <style media="print">
+        @page {
+            margin: 0;
+            font-size: 19px;
+        }
+        #fyd{
+            width: 120px; border:1px solid #000000;
+        }
+        #fydn{
+            float: left;width:40%; margin-left: 8px; margin-top: 30px;position: relative;border:2px solid #000000;
+        }
+        #printCode{
+            width: 100% !important; height: auto !important;
+        }
+        #ddd{
+            width: 100%;border-top: 1px solid #000000;
+        }
+        table{
+           margin-left:12px;
+        }
+        #h3{
+            text-align: left;margin-left:120px;
+        }
+    </style>
 </head>
 <body>
 
@@ -184,6 +223,62 @@
 
     </div>
 </div>
+
+
+
+
+
+
+<div id="fyd">
+
+<div id="fydn">
+<p id="h3">检查费用单</p>
+<img id="printCode" alt="" src="">
+    <div id="ddd">
+<table cellspacing="0" cellpadding="0">
+    <tbody id="bh">
+    <tr>
+        <td>姓名：<span id="printname"></span></td>
+    </tr>
+    <tr>
+        <td>身份证号：<span id="printCard"></span></td>
+    </tr>
+    <tr id="printXM">
+        <td>时间：<span id="printDate"></span></td>
+    </tr >
+    <tr>
+        <td>金额总计：<span id="printTaocanfeiyong">dedede</span></td>
+    </tr>
+    <tr>
+        <td>应付金额：<span id="printYingfufeiyong">dededewd</span></td>
+    </tr>
+
+    </tbody>
+</table>
+    </div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <object id=CVR_IDCard height=0 width=0 type="application/cert-reader"
         classid=clsid:10946843-7507-44FE-ACE8-2B3483D179B7 name=CVR_IDCard>
     <p style="color:#FF0000;">控件不可用，可能未正确安装控件及驱动，或者控件未启用。</p>
@@ -358,7 +453,31 @@
             success : function(data) {
                 if (data.code == 0) {
                         console.info(data.msg);
-                    window.open("/information/checkHistory/print?id="+data.msg);
+
+
+                        $("#printname").text(name);
+                        $("#printCard").text(identityCard);
+                        let date = new Date();
+                        $("#printDate").text(date.sdf());
+                        $("#printTaocanfeiyong").text(totalPrice);
+                        $("#printYingfufeiyong").text(yingfuPrice);
+                        $("#printCode").attr("src",data.msg);
+                        for(let item of itemArry){
+                            $("#printXM").after(`<tr><td>检查项：<span>${item}</span></td></tr>`);
+                        }
+
+                    //需要打印的部分
+                    let newstr = document.getElementById("fyd").innerHTML;
+                    //保存当前页面的
+                    let oldstr = document.body.innerHTML;
+                    //把当前页面替换成需要打印的部分
+                    document.body.innerHTML = newstr;
+                    //执行打印操作
+                    window.print();
+                    //还原当前页面
+                    document.body.innerHTML = oldstr;
+                    window.location.reload(true);
+
                 } else {
                     parent.layer.alert(data.msg)
                 }
@@ -421,6 +540,10 @@
         document.getElementById("birthday").value = pBorn.replace(/^(\d{4})(\d{2})(\d{2})$/, "$1-$2-$3");//出生年月
         document.getElementById("address").value = pAddress;//户籍
         document.getElementById("identityCard").value = pCardNo;//身份证号
+    }
+
+    Date.prototype.sdf=function(){
+        return this.getFullYear()+"-"+(this.getMonth()+1)+"-"+this.getDate()+" "+this.getHours()+":"+this.getMinutes()+":"+this.getSeconds();
     }
 </script>
 
